@@ -51,13 +51,11 @@ public class MainActivity extends AppCompatActivity implements IHttpResponseList
         });
 
         pagerExams = (ViewPager) findViewById(R.id.pagerExams);
-        if (savedInstanceState == null) {
-            loadFromRemote();
-            adapter = new ExamsPagerAdapter(getSupportFragmentManager());
-            pagerExams.setAdapter(adapter);
-            pagerExams.setOffscreenPageLimit(1);
-        }
-
+        loadFromRemote();
+        adapter = new ExamsPagerAdapter(getSupportFragmentManager());
+        pagerExams.setAdapter(adapter);
+        pagerExams.setOffscreenPageLimit(1);
+        
     }
 
     @Override

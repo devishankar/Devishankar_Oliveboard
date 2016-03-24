@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Devishankar Oliveboard</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_add_duplicate">Duplicate tabs</string>
+</resources>

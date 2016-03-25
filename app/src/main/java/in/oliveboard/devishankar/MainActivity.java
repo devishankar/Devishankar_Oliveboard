@@ -3,7 +3,7 @@ package in.oliveboard.devishankar;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +20,6 @@ import in.oliveboard.devishankar.fragments.ExamFragment;
 import in.oliveboard.devishankar.handlers.response.ApiResponseHandler;
 import in.oliveboard.devishankar.listeners.IHttpResponseListener;
 import in.oliveboard.devishankar.utils.AppHttpClient;
-import in.oliveboard.devishankar.views.SlidingTabLayout;
 
 public class MainActivity extends AppCompatActivity implements IHttpResponseListener {
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements IHttpResponseList
     private Context mContext;
     private ExamsPagerAdapter adapter;
     private ViewPager pagerExams;
-    private SlidingTabLayout tabs;
+    private TabLayout tabs;
     private JSONObject body;
 
     @Override
@@ -41,21 +40,12 @@ public class MainActivity extends AppCompatActivity implements IHttpResponseList
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return ContextCompat.getColor(mContext, android.R.color.white);
-            }
-        });
+        tabs = (TabLayout) findViewById(R.id.tabs);
 
         pagerExams = (ViewPager) findViewById(R.id.pagerExams);
         loadFromRemote();
         adapter = new ExamsPagerAdapter(getSupportFragmentManager());
         pagerExams.setAdapter(adapter);
-        pagerExams.setOffscreenPageLimit(1);
-
     }
 
     @Override
@@ -110,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements IHttpResponseList
                 adapter.addFragment(ExamFragment.newInstance(content), title);
         }
         adapter.notifyDataSetChanged();
-        tabs.setViewPager(pagerExams);
+        tabs.setupWithViewPager(pagerExams);
     }
 
     @Override

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements IHttpResponseList
         adapter = new ExamsPagerAdapter(getSupportFragmentManager());
         pagerExams.setAdapter(adapter);
         pagerExams.setOffscreenPageLimit(1);
-        
+
     }
 
     @Override
@@ -92,24 +92,25 @@ public class MainActivity extends AppCompatActivity implements IHttpResponseList
 
     private void processData(JSONObject body) throws JSONException {
         JSONArray jArr = body.optJSONArray("exams");
-        if (jArr != null) {
-
-            for (int i = 0; i < jArr.length(); i++) {
-                JSONArray innerArr = jArr.optJSONArray(i);
-                String title = "", content = "";
-                for (int j = 0; j < innerArr.length(); j++) {
-                    if (j == 0) {
-                        title = innerArr.getString(j);
-                    } else if (j == 1) {
-                        content = innerArr.getString(j);
-                    }
-                }
-                if (!title.equals("") && !content.equals(""))
-                    adapter.addFragment(ExamFragment.newInstance(content), title);
-            }
-            adapter.notifyDataSetChanged();
-            tabs.setViewPager(pagerExams);
+        if (jArr == null) {
+            return;
         }
+
+        for (int i = 0; i < jArr.length(); i++) {
+            JSONArray innerArr = jArr.optJSONArray(i);
+            String title = "", content = "";
+            for (int j = 0; j < innerArr.length(); j++) {
+                if (j == 0) {
+                    title = innerArr.getString(j);
+                } else if (j == 1) {
+                    content = innerArr.getString(j);
+                }
+            }
+            if (!title.equals("") && !content.equals(""))
+                adapter.addFragment(ExamFragment.newInstance(content), title);
+        }
+        adapter.notifyDataSetChanged();
+        tabs.setViewPager(pagerExams);
     }
 
     @Override
